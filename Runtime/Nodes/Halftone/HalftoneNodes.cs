@@ -7,28 +7,28 @@ using UnityEditor.ShaderGraph.Drawing.Controls;
 using UnityEngine;
 
 [Serializable]
-public enum HalftoneMode {
+public enum HalftoneMode
+{
     Circle,
     Smooth,
     Square
 }
 
 [Title("Halftone", "Halftone Monochrome")]
-internal class HalftoneMonochromeNode : CodeFunctionNode {
+internal class HalftoneMonochromeNode : CodeFunctionNode
+{
     [SerializeField] private HalftoneMode m_HalftoneMode = HalftoneMode.Circle;
 
-    public HalftoneMonochromeNode() {
-        name = "Halftone Monochrome";
-    }
+    public HalftoneMonochromeNode() { name = "Halftone Monochrome"; }
 
-    private string GetCurrentModeName() {
-        return Enum.GetName(typeof(HalftoneMode), m_HalftoneMode);
-    }
+    private string GetCurrentModeName() { return Enum.GetName(typeof(HalftoneMode), m_HalftoneMode); }
 
     [EnumControl("Mode")]
-    public HalftoneMode halftoneMode {
+    public HalftoneMode halftoneMode
+    {
         get { return m_HalftoneMode; }
-        set {
+        set
+        {
             if (m_HalftoneMode == value)
                 return;
             m_HalftoneMode = value;
@@ -36,12 +36,11 @@ internal class HalftoneMonochromeNode : CodeFunctionNode {
         }
     }
 
-    protected override MethodInfo GetFunctionToConvert() {
-        return GetType().GetMethod(string.Format("HalftoneMonochrome_{0}", GetCurrentModeName()), BindingFlags.Static | BindingFlags.NonPublic);
-    }
+    protected override MethodInfo GetFunctionToConvert() { return GetType().GetMethod(string.Format("HalftoneMonochrome_{0}", GetCurrentModeName()), BindingFlags.Static | BindingFlags.NonPublic); }
 
-    private static string HalftoneMonochrome_Circle([Slot(0, Binding.None)] Vector1 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)]
-        Vector2 Offset, [Slot(3, Binding.None)] out Vector1 Out) {
+    private static string HalftoneMonochrome_Circle([Slot(0, Binding.None)] Vector1 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)] Vector2 Offset,
+                                                    [Slot(3, Binding.None)] out Vector1 Out)
+    {
         return @"
 {
 	float Scale = 0.78;
@@ -53,8 +52,9 @@ internal class HalftoneMonochromeNode : CodeFunctionNode {
 ";
     }
 
-    private static string HalftoneMonochrome_Smooth([Slot(0, Binding.None)] Vector1 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)]
-        Vector2 Offset, [Slot(3, Binding.None)] out Vector1 Out) {
+    private static string HalftoneMonochrome_Smooth([Slot(0, Binding.None)] Vector1 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)] Vector2 Offset,
+                                                    [Slot(3, Binding.None)] out Vector1 Out)
+    {
         return @"
 {
 	float2 Direction = Offset/dot(Offset, Offset);
@@ -70,8 +70,9 @@ internal class HalftoneMonochromeNode : CodeFunctionNode {
 ";
     }
 
-    private static string HalftoneMonochrome_Square([Slot(0, Binding.None)] Vector1 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)]
-        Vector2 Offset, [Slot(3, Binding.None)] out Vector1 Out) {
+    private static string HalftoneMonochrome_Square([Slot(0, Binding.None)] Vector1 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)] Vector2 Offset,
+                                                    [Slot(3, Binding.None)] out Vector1 Out)
+    {
         return @"
 {
 	float2 Direction = Offset/dot(Offset, Offset);
@@ -85,21 +86,20 @@ internal class HalftoneMonochromeNode : CodeFunctionNode {
 }
 
 [Title("Halftone", "Halftone Color")]
-internal class HalftoneColorNode : CodeFunctionNode {
+internal class HalftoneColorNode : CodeFunctionNode
+{
     [SerializeField] private HalftoneMode m_HalftoneMode = HalftoneMode.Circle;
 
-    public HalftoneColorNode() {
-        name = "Halftone Color";
-    }
+    public HalftoneColorNode() { name = "Halftone Color"; }
 
-    private string GetCurrentModeName() {
-        return Enum.GetName(typeof(HalftoneMode), m_HalftoneMode);
-    }
+    private string GetCurrentModeName() { return Enum.GetName(typeof(HalftoneMode), m_HalftoneMode); }
 
     [EnumControl("Mode")]
-    public HalftoneMode halftoneMode {
+    public HalftoneMode halftoneMode
+    {
         get { return m_HalftoneMode; }
-        set {
+        set
+        {
             if (m_HalftoneMode == value)
                 return;
             m_HalftoneMode = value;
@@ -107,14 +107,12 @@ internal class HalftoneColorNode : CodeFunctionNode {
         }
     }
 
-    protected override MethodInfo GetFunctionToConvert() {
-        return GetType().GetMethod(string.Format("HalftoneColor_{0}", GetCurrentModeName()), BindingFlags.Static | BindingFlags.NonPublic);
-    }
+    protected override MethodInfo GetFunctionToConvert() { return GetType().GetMethod(string.Format("HalftoneColor_{0}", GetCurrentModeName()), BindingFlags.Static | BindingFlags.NonPublic); }
 
-    static string HalftoneColor_Circle([Slot(0, Binding.None)] Vector3 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)]
-        Vector2 OffsetR, [Slot(3, Binding.None, 0.00866f, 0.005f, 0, 0)]
-        Vector2 OffsetG, [Slot(4, Binding.None, 0.005f, 0.00866f, 0, 0)]
-        Vector2 OffsetB, [Slot(5, Binding.None)] out Vector3 Out) {
+    static string HalftoneColor_Circle([Slot(0, Binding.None)] Vector3 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)] Vector2 OffsetR,
+                                       [Slot(3, Binding.None, 0.00866f, 0.005f, 0, 0)] Vector2 OffsetG, [Slot(4, Binding.None, 0.005f, 0.00866f, 0, 0)] Vector2 OffsetB,
+                                       [Slot(5, Binding.None)] out Vector3 Out)
+    {
         Out = new Vector3();
         return @"
 {
@@ -133,10 +131,13 @@ internal class HalftoneColorNode : CodeFunctionNode {
 ";
     }
 
-    static string HalftoneColor_Smooth([Slot(0, Binding.None)] Vector3 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)]
-        Vector2 OffsetR, [Slot(3, Binding.None, 0.00866f, 0.005f, 0, 0)]
-        Vector2 OffsetG, [Slot(4, Binding.None, 0.005f, 0.00866f, 0, 0)]
-        Vector2 OffsetB, [Slot(5, Binding.None)] out Vector3 Out) {
+    static string HalftoneColor_Smooth([Slot(0, Binding.None)] Vector3 Base,
+                                       [Slot(1, Binding.WorldSpacePosition)] Vector2 UV,
+                                       [Slot(2, Binding.None, 0.01f, 0, 0, 0)] Vector2 OffsetR,
+                                       [Slot(3, Binding.None, 0.00866f, 0.005f, 0, 0)] Vector2 OffsetG,
+                                       [Slot(4, Binding.None, 0.005f, 0.00866f, 0, 0)] Vector2 OffsetB,
+                                       [Slot(5, Binding.None)] out Vector3 Out)
+    {
         Out = new Vector3();
         return @"
 {
@@ -166,10 +167,10 @@ internal class HalftoneColorNode : CodeFunctionNode {
 ";
     }
 
-    static string HalftoneColor_Square([Slot(0, Binding.None)] Vector3 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)]
-        Vector2 OffsetR, [Slot(3, Binding.None, 0.00866f, 0.005f, 0, 0)]
-        Vector2 OffsetG, [Slot(4, Binding.None, 0.005f, 0.00866f, 0, 0)]
-        Vector2 OffsetB, [Slot(5, Binding.None)] out Vector3 Out) {
+    static string HalftoneColor_Square([Slot(0, Binding.None)] Vector3 Base, [Slot(1, Binding.WorldSpacePosition)] Vector2 UV, [Slot(2, Binding.None, 0.01f, 0, 0, 0)] Vector2 OffsetR,
+                                       [Slot(3, Binding.None, 0.00866f, 0.005f, 0, 0)] Vector2 OffsetG, [Slot(4, Binding.None, 0.005f, 0.00866f, 0, 0)] Vector2 OffsetB,
+                                       [Slot(5, Binding.None)] out Vector3 Out)
+    {
         Out = new Vector3();
         return @"
 {

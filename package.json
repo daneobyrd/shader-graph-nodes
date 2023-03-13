@@ -1,0 +1,23 @@
+{
+	"name": "com.neon-age.shader-graph-nodes",
+	"version": "2.0.0",
+	"displayName":"Shader Graph Custom Nodes",
+	"description": 
+	"Custom Nodes for Unity Shader Graph, to be used in newer Unity versions with the SRP / URP / HDRP.\nIt uses CodeFunctionNode API, which was made internal in 2018.2, but is now accessible using AsmRef.\n\nRequires Unity 2019.4 or higher.\nIf you wish to use it in older versions, you'll need to remove .asmref file in Nodes folder.",
+	"unity": "2019.4",
+	"documentationUrl": "See ReadMe.md",
+	"samples": [
+	{
+		"displayName": "Truchet Examples",
+		"description": "Contains example shaders, materials, and textures for hexagon, square, and triangle Truchet procedural patterns.",
+		"path": "Samples~/TruchetExamples"
+	}
+	],
+	"dependencies": {
+		"com.unity.shadergraph": "7.3.1"
+	},
+	"author": {
+		"name": "Giles Coope and Neonage",
+		"email": "giles.coope@unity3d.com",
+		"url": "https://twitter.com/_neonage" }
+}
